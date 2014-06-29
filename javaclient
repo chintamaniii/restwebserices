@@ -29,8 +29,8 @@ import com.sun.org.apache.xerces.internal.*;
   
 public class SharePointJavaClient {  
     public static void main(final String[] args) throws Exception { 
-    	String username="chinta@semantic667.onmicrosoft.com";
-    	String password="Indramani*123";
+    	String username="chintaaaaaa@semantic667.onmicrosoft.com";
+    	String password="";
         final ListsSoap listsSoapProxy = sharePointListsAuth(username, password);  
         String listName = "Document";  
         String rowLimit = "150";  
