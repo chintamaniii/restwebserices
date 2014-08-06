@@ -1,0 +1,176 @@
+<html>
+<table width="100%" border="1">
+<tr><td align="center">Top Bar</td></tr>
+<tr><td align="center"><span id="title">Welcome</span></td></tr>
+<tr><td align="center">
+
+<span id="formbody"></span>
+
+<span style="color:red;font-size:15px;">STYLE THE TEXT</span>
+<span style="background-color:green;height:150px;width:150px;border:1px solid grey;">STYLE THE BACKGROUND</span>
+
+</td></tr>
+</table>
+
+
+
+
+
+
+<textarea id="buttons" style="display:none;">
+	<table width="90%" border="1">
+<tr>
+	<td><a onclick="javascript:login();"><input type="button" name="button1" value="Login"></a></td>
+	<td><input type="button" name="button2" value="Button2"></td>
+	<td><input type="button" name="button3" value="Button3"></td>
+	<td><input type="button" name="button4" value="Button4"></td>
+	<td><input type="button" name="button5" value="Button5"></td>
+	<td><input type="button" name="button6" value="Button6"></td>
+	<td><input type="button" name="button7" value="Button7"></td>
+</tr>
+<tr>
+	<td><input type="button" name="button8" value="Button8"></td>
+	<td><input type="button" name="button2" value="Button2"></td>
+	<td><input type="button" name="button3" value="Button3"></td>
+	<td><input type="button" name="button4" value="Button4"></td>
+	<td><input type="button" name="button5" value="Button5"></td>
+	<td><input type="button" name="button6" value="Button6"></td>
+	<td><input type="button" name="button7" value="Button7"></td>
+</tr>
+<tr>
+	<td><input type="button" name="button1" value="Login"></td>
+	<td><input type="button" name="button2" value="Button2"></td>
+	<td><input type="button" name="button3" value="Button3"></td>
+	<td><input type="button" name="button4" value="Button4"></td>
+	<td><input type="button" name="button5" value="Button5"></td>
+	<td><input type="button" name="button6" value="Button6"></td>
+	<td><input type="button" name="button7" value="Button7"></td>
+</tr>
+</table>
+</textarea>
+
+
+
+<textarea id="loginform" style="display:none;">
+	<form method="post" class="login">
+		<table width="90%" border="0">
+		<tr>
+		<td>Site Url</td>
+		<td>:</td>
+		<td><select name="site_url" style="width:200px;"><option value="google">www.google.com</option><option value="yahoo">www.yahoo.com</option><option value="bing">www.bing.com</option></select></td>
+		</tr>
+		<tr>
+		<td>UserId</td>
+		<td>:</td>
+		<td>
+			<span id="usedid_label">
+			<select name="userid" id="userid" style="width:200px;">
+			<option value="USER00001">USER00001</option>
+			<option value="USER00002">USER00002</option></select>
+			<input type="button" value="..." id="add_new_user" onclick="userid_label();">
+		</span>
+		</td>
+		</tr>
+		<tr>
+		<td>Password</td>
+		<td>:</td>
+		<td><input name="password"  id="password" type="password" style="width:200px;"></td>
+		</tr>
+		<tr>
+		<td><input type="checkbox" name="rember" onclick="rememberme();"> Remember Me</td>
+		</tr>
+		</table>
+		</form>
+
+<table width="90%" border="0">
+<tr>
+	<td align=left><img src="http://png-3.findicons.com/files/icons/1035/human_o2/32/emblem_ok.png" onclick="javascript:correct();"></td>
+	<td colspan="5"></td>
+	<td align=right><img src="http://png-3.findicons.com/files/icons/2117/nuove/32/button_cancel.png" onclick="javascript:wrong();"</td>
+</tr>
+</table>		
+</textarea>
+
+<script>
+var getJSON = function(url, successHandler, errorHandler) {
+	if (typeof XMLHttpRequest == 'undefined') {
+		alert("xhr not working");
+	}
+	var xhr = new XMLHttpRequest();
+	var responseTypeAware = 'responseType' in xhr;
+	xhr.open('get', url, true);
+	if (responseTypeAware) {
+    	xhr.responseType = 'json';
+  	}
+	xhr.onreadystatechange = function() {
+		var status = xhr.status;
+		if (status == 200) {
+			successHandler && successHandler(responseTypeAware ? xhr.response : JSON.parse(xhr.responseText));
+		} else {
+			errorHandler && errorHandler(status);
+		}
+	};
+	xhr.send();
+};
+</script>
+
+
+<script>
+document.getElementById("formbody").innerHTML= document.getElementById("buttons").value;
+document.getElementById("userid").value = localStorage.getItem("userid");
+document.getElementById("password").value = localStorage.getItem("pwd");
+function login() {
+		document.getElementById("title").innerHTML="Welcome To SharePoint";
+		document.getElementById("formbody").innerHTML= document.getElementById("loginform").value;
+		document.getElementById("userid").value = localStorage.getItem("userid");
+		document.getElementById("password").value = localStorage.getItem("pwd");
+}
+function wrong(){
+	document.getElementById("title").innerHTML="Welcome";
+	document.getElementById("formbody").innerHTML= document.getElementById("buttons").value;
+}
+
+function rememberme(){
+	localStorage.setItem("userid", document.getElementById("userid").value);
+	localStorage.setItem("pwd", document.getElementById("password").value);
+}
+function userid_label(){
+
+	document.getElementById("usedid_label").innerHTML = '<input name="userid" id="userid" type="text" style="width:200px;">';
+
+}
+
+function correct() {
+	var u = document.getElementById("userid").value;
+	var p = document.getElementById("password").value;
+	
+
+	var url = 'http://mathiasbynens.be/demo/ip';
+	//var url = 'success_server.json?userid='+u+'&password='+p;
+	//var url = 'failure_server.json?userid='+u+'&password='+p;
+
+
+	getJSON(url, function(data) {
+		if (typeof data == 'string') {
+			alert("json not supported!!!!");
+		} else {
+
+/*			if(data.output.status==true) {
+
+				alert('Detail after succesful login: ' + data.output.detail);
+			}else{
+
+				alert('Detail after invalid login: ' + data.output.detail);
+			}*/
+
+			alert("Chintamani getting IP From a server json example : "+data.ip);
+
+		}
+	});
+
+
+
+}
+</script>
+
+</html>
