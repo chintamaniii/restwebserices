@@ -4,5 +4,8 @@ jersey-core-1.17
 jersey-server-1.17
 jersey-servlet-1.17
 jsr311-api-1.1.1
+jackson-core-2.1.4
+jackson-databind-2.1.4
+jackson-annotations-2.1.4
 
 all jars of jersey  must be same version
