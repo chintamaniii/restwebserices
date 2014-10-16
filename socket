@@ -1,0 +1,52 @@
+package network;
+
+import java.net.*;  
+import java.io.*;  
+  
+public class Network {  
+    static BufferedInputStream bis;  
+    static BufferedOutputStream bos;  
+    static Socket socket;  
+    static byte[] byteArray;  
+    //BufferedInputStream bis;  
+    //BufferedOutputStream bos;  
+      
+    static BufferedReader in = null;  
+    static PrintWriter out = null;  
+      
+    public static void main (String[] args) {  
+  
+      
+    try{  
+        socket = new Socket("192.168.1.100", 5555);  
+        System.out.println("I am the Client.  Connecting ...");   
+        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));  
+        out = new PrintWriter(socket.getOutputStream(), true);  
+          
+        BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));  
+          
+        out.println("Connecting.."); //(1)  
+        System.out.println("Server: "+in.readLine()); //(2)  
+          
+          
+        File file = new File("Props.txt");  
+        int len = (int)file.length();  
+        System.out.println("Sending file size of Props.txt");  
+          
+        out.println(Integer.toString(len)); //(1)  
+          
+        System.out.println("Server: "+in.readLine()); //(2)  
+        bis = new BufferedInputStream(new FileInputStream("Props.txt"));  
+        bos = new BufferedOutputStream(socket.getOutputStream());  
+        byteArray = new byte[1000];  
+        int i=0;  
+        while ((i = bis.read(byteArray)) != len){ //in = int; byteArray = byte[]  
+            bos.write(byteArray, 0, i);  
+        }  
+    }  
+    catch(IOException e){  
+        e.printStackTrace();  
+    }  
+}  
+  
+}  
